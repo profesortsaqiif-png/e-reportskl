@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Aspirasi OSIS - Form Modern</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="brand">
+      <h1>📢 E-Aspirasi OSIS</h1>
+      <span id="namaSekolahDisplay">Memuat identitas sekolah...</span>
+    </div>
+
+    <div class="nav-right">
+      <div class="greeting-box">
+        <div id="greetingText" class="greeting-text">Selamat datang!</div>
+        <div id="localTimeDisplay" class="local-time">Memuat waktu setempat...</div>
+      </div>
+
+      <div class="theme-switch-wrapper">
+        <label for="toggleDarkSwitch" id="labelDarkSwitch" class="theme-switch-label">🌙 Mode Gelap</label>
+        <label class="switch">
+          <input type="checkbox" id="toggleDarkSwitch" onchange="toggleDarkMode(this.checked)">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- STATISTIK DASHBOARD -->
+    <div class="stats-container">
+      <div class="stat-card">
+        <h3>Total Laporan Masuk</h3>
+        <div class="stat-value" id="statTotal" style="color: var(--text-main);">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Menunggu Tindakan</h3>
+        <div class="stat-value" id="statMenunggu" style="color: #dc2626;">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>Sedang Diproses</h3>
+        <div class="stat-value" id="statDiproses" style="color: #d97706;">0</div>
+      </div>
+      <div class="stat-card">
+        <h3 id="labelSelesai">Selesai (0%)</h3>
+        <div class="stat-value" id="statSelesai" style="color: #16a34a;">0</div>
+      </div>
+    </div>
+
+    <!-- FORM MODERN & INTERAKTIF -->
+    <div class="form-card">
+      <div class="form-header">
+        <span class="form-header-badge">✨ Suara Siswa</span>
+        <h2 id="formTitle">Kirim Aspirasi & Saran</h2>
+        <p>Sampaikan ide, kritik, atau laporanmu langsung ke pengurus OSIS.</p>
+      </div>
+
+      <div class="form-body">
+        <form id="formLaporan">
+          <input type="hidden" id="editId">
+
+          <!-- NAMA PENGIRIM + OPSI ANONIM -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="namaPeminjam">Identitas Pengirim</label>
+              <label class="anon-toggle">
+                <input type="checkbox" id="cekAnonim" onchange="toggleAnonim(this.checked)">
+                Kirim sebagai Anonim
+              </label>
+            </div>
+            <div class="input-icon-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="namaPeminjam" class="form-control" placeholder="Nama & Kelas (Contoh: Budi - X RPL 1)" required>
+            </div>
+          </div>
+
+          <!-- KATEGORI ASPIRASI (KARTU PILIHAN) -->
+          <div class="form-group">
+            <div class="label-row">
+              <label>Pilih Kategori Aspirasi</label>
+            </div>
+            <div class="category-grid">
+              <label class="cat-option">
+                <input type="radio" name="kategoriRadio" value="Fasilitas & Sarpras Sekolah" checked>
+                <span class="cat-card">🏫 Fasilitas & Sarpras</span>
+              </label>
+              <label class="cat-option">
+                <input type="radio" name="kategoriRadio" value="Kegiatan Ekstrakurikuler">
+                <span class="cat-card">⚽ Ekstrakurikuler</span>
+              </label>
+              <label class="cat-option">
+                <input type="radio" name="kategoriRadio" value="Kebersihan & Lingkungan">
+                <span class="cat-card">🌱 Kebersihan Sekolah</span>
+              </label>
+              <label class="cat-option">
+                <input type="radio" name="kategoriRadio" value="Kebijakan & Akademik">
+                <span class="cat-card">📚 Akademik & Aturan</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- TINGKAT URGENSI (SEGMENTED PILLS) -->
+          <div class="form-group">
+            <div class="label-row">
+              <label>Tingkat Urgensi</label>
+            </div>
+            <div class="priority-group">
+              <label class="prio-option">
+                <input type="radio" name="prioritasRadio" value="Rendah" checked>
+                <span class="prio-pill">🟢 Rendah <small>Saran Umum</small></span>
+              </label>
+              <label class="prio-option">
+                <input type="radio" name="prioritasRadio" value="Sedang">
+                <span class="prio-pill">🟡 Sedang <small>Perlu Perhatian</small></span>
+              </label>
+              <label class="prio-option">
+                <input type="radio" name="prioritasRadio" value="Darurat">
+                <span class="prio-pill">🔴 Darurat <small>Mendesak</small></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- ISI ASPIRASI + PROGRESS BAR KARAKTER -->
+          <div class="form-group">
+            <div class="label-row">
+              <label for="deskripsi">Detail Aspirasi / Usulan</label>
+            </div>
+            <textarea id="deskripsi" class="textarea-modern" placeholder="Jelaskan aspirasi atau usulanmu secara jelas dan sopan..." required></textarea>
+            <div class="char-meter-wrap">
+              <div class="char-bar-bg">
+                <div id="charBarFill" class="char-bar-fill"></div>
+              </div>
+              <div id="charCounter" style="color: #dc2626;">0 / 10 karakter (Minimal 10 huruf)</div>
+            </div>
+          </div>
+
+          <button type="submit" id="btnSubmit" class="btn-submit">🚀 Kirim Aspirasi Sekarang</button>
+          <button type="button" id="btnCancelEdit" class="btn-cancel" onclick="batalEdit()">Batal Edit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TABEL DAFTAR ASPIRASI -->
+    <div class="card">
+      <h2>Daftar Aspirasi & Tindak Lanjut OSIS</h2>
+
+      <div class="toolbar">
+        <div class="filter-box">
+          <select id="filterKategori" onchange="renderTabel()">
+            <option value="Semua">Semua Kategori</option>
+            <option value="Fasilitas & Sarpras Sekolah">Fasilitas & Sarpras Sekolah</option>
+            <option value="Kegiatan Ekstrakurikuler">Kegiatan Ekstrakurikuler</option>
+            <option value="Kebersihan & Lingkungan">Kebersihan & Lingkungan</option>
+            <option value="Kebijakan & Akademik">Kebijakan & Akademik</option>
+          </select>
+
+          <select id="filterStatus" onchange="renderTabel()">
+            <option value="Semua">Semua Status</option>
+            <option value="Menunggu">Menunggu</option>
+            <option value="Diproses">Diproses</option>
+            <option value="Selesai">Selesai</option>
+          </select>
+        </div>
+
+        <button class="btn-clean" onclick="bersihkanSelesai()">🧹 Bersihkan Selesai</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Pengirim</th>
+              <th>Kategori & Aspirasi</th>
+              <th>Urgensi</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tabelBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Portal Aspirasi Resmi OSIS | Dikembangkan oleh: <strong>Ahmad Tsaqiif - Kelas X RPL </strong></p>
+  </footer>
+
+  <script src="assets/js.js"></script>
+  
+</body>
+</html>
